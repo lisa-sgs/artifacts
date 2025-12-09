@@ -2,6 +2,7 @@
 name = "lisa-artifacts"
 dynamic = ["version"]
 description = "LISA Artifacts"
+license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -11,6 +12,41 @@ dependencies = [
     "types-aiobotocore[essential]",
 ]
 
+[project.urls]
+Homepage = "https://github.com/lisa-sgs/artifacts"
+Source = "https://github.com/lisa-sgs/artifacts"
+Issues = "https://github.com/lisa-sgs/artifacts/issues"
+Changelog = "https://github.com/lisa-sgs/artifacts/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = ["pre-commit"]
+
 [build-system]
 requires = ["setuptools>=80", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.ruff.lint]
+# See https://docs.astral.sh/ruff/rules
+select = [
+    "ASYNC",
+    "C",
+    "D2",
+    "D4",
+    "E",
+    "F",
+    "I",
+    "N",
+    "NPY",
+    "RUF",
+    "S",
+    "UP",
+    "W",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# See https://github.com/astral-sh/ruff/issues/4368
+"tests/**/*.py" = [
+    "S101", # Allow `assert` in tests
+]
