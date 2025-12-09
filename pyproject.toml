@@ -1,0 +1,16 @@
+[project]
+name = "lisa-artifacts"
+dynamic = ["version"]
+description = "LISA Artifacts"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiobotocore",
+    "aiofiles",
+    "pydantic",
+    "types-aiobotocore[essential]",
+]
+
+[build-system]
+requires = ["setuptools>=80", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
