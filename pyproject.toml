@@ -6,10 +6,9 @@ license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "aiobotocore",
-    "aiofiles",
+    "boto3",
     "pydantic",
-    "types-aiobotocore[essential]",
+    "types-boto3[s3]",
 ]
 
 [project.urls]
@@ -19,7 +18,9 @@ Issues = "https://github.com/lisa-sgs/artifacts/issues"
 Changelog = "https://github.com/lisa-sgs/artifacts/blob/main/CHANGELOG.md"
 
 [dependency-groups]
-dev = ["pre-commit"]
+dev = [
+    "pre-commit",
+]
 
 [build-system]
 requires = ["setuptools>=80", "setuptools-scm>=8"]
