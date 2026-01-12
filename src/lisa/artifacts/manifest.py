@@ -45,13 +45,17 @@ class Manifest(BaseModel):
 
     def get(self) -> GetManifestResult:
         client = boto3.client("s3")
-        for a in self.artifacts:
+        for i, a in enumerate(self.artifacts, start=1):
+            logger.info(
+                "Downloading artifact %d/%d: %s", i, len(self.artifacts), a.name
+            )
             self.get_artifact(client, a)
         return GetManifestResult()
 
     def store(self) -> StoreManifestResult:
         client = boto3.client("s3")
-        for a in self.artifacts:
+        for i, a in enumerate(self.artifacts, start=1):
+            logger.info("Storing artifact %d/%d: %s", i, len(self.artifacts), a.name)
             self.store_artifact(client, a)
 
         return StoreManifestResult()
