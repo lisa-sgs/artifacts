@@ -26,6 +26,4 @@ Set the following environment variables:
 
 ## Basic Usage
 
-See the [README](../README.md) for a quick start example.
-
-For more examples, see [Examples](examples.md).
+See [Examples](examples.md).
