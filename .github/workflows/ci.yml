@@ -3,8 +3,8 @@ name: Continuous Integration
 on: [push, pull_request]
 
 jobs:
-  test:
-    name: Run tests
+  build:
+    name: Run tests, lint and build documentation.
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,7 +34,7 @@ jobs:
   pypi-publish:
     environment: release
     name: Publish package to PyPI
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       id-token: write
