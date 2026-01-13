@@ -44,6 +44,10 @@ html_show_sphinx = False
 
 html_static_path = ["_static"]
 
+templates_path = [
+    "_templates",
+]
+
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = [
@@ -53,8 +57,21 @@ html_css_files = [
 
 # Multiversion configuration
 # Build versions from tags matching vX.Y.Z and main branch
-smv_tag_whitelist = None
-smv_branch_whitelist = None
+# Whitelist pattern for tags (set to None to ignore all tags)
+smv_tag_whitelist = r"^v.*$"
+
+# Whitelist pattern for branches (set to None to ignore all branches)
+smv_branch_whitelist = r"^.*$"
+
+# Whitelist pattern for remotes (set to None to use local branches only)
 smv_remote_whitelist = None
+
+# Pattern for released versions
+smv_released_pattern = r"^tags/v.*$"
+
+# Format for versioned output directories inside the build directory
 smv_outputdir_format = "{ref.name}"
+
+# Determines whether remote or local git branches/tags are preferred if their output
+# dirs conflict
 smv_prefer_remote_refs = False
