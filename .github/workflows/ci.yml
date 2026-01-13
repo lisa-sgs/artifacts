@@ -57,11 +57,11 @@ jobs:
         run: uv publish --trusted-publishing always
 
   pages-publish:
-    environment:
-      name: Publish documentation to GitHub pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    name: Publish documentation to GitHub pages
     needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Deploy to GitHub Pages
