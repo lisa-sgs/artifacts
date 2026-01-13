@@ -3,8 +3,8 @@ name: Continuous Integration
 on: [push, pull_request]
 
 jobs:
-  test:
-    name: Run tests
+  build:
+    name: Run tests, lint and build documentation.
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,16 +23,26 @@ jobs:
       - name: Run pre-commit hooks
         run: uv run pre-commit run --all-files --show-diff-on-failure
 
+      - name: Build documentation
+        run: uv run sphinx-multiversion docs _build/html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _build/html
+
   pypi-publish:
     environment: release
     name: Publish package to PyPI
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       id-token: write
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install uv and set the python version
         uses: astral-sh/setup-uv@v6
@@ -45,3 +55,15 @@ jobs:
 
       - name: Publish to PyPI
         run: uv publish --trusted-publishing always
+
+  pages-publish:
+    environment:
+      name: Publish documentation to GitHub pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

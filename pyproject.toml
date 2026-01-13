@@ -1,7 +1,7 @@
 [project]
 name = "lisa-artifacts"
 dynamic = ["version"]
-description = "LISA Artifacts"
+description = "A library for managing object storage artifacts"
 license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,11 +15,17 @@ dependencies = [
 Homepage = "https://github.com/lisa-sgs/artifacts"
 Source = "https://github.com/lisa-sgs/artifacts"
 Issues = "https://github.com/lisa-sgs/artifacts/issues"
+ Documentation = "https://lisa-sgs.github.io/artifacts/"
 Changelog = "https://github.com/lisa-sgs/artifacts/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
+    "myst-parser",
     "pre-commit",
+    "sphinx",
+    "sphinx-multiversion",
+    "sphinx-pydantic",
+    "sphinx-rtd-theme",
 ]
 
 [build-system]
