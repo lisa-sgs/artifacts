@@ -11,33 +11,26 @@ logger = logging.getLogger(__name__)
 
 
 class Artifact(BaseModel):
-    """Represents an artifact with a name and local path.
-
-    Attributes:
-        name: The name of the artifact, used as the S3 key.
-        path: The local file path relative to the local prefix.
-
-    """
+    """Represents an artifact with a name and local path."""
 
     name: Annotated[str, Field(min_length=1, strict=True)]
+    """The name of the artifact, usefffd as the S3 key."""
+
     path: Annotated[str, Field(min_length=1, strict=True)]
+    """The local file path relative to the local prefix."""
 
 
 class ManifestConfiguration(BaseModel):
-    """Configuration for manifest operations.
-
-    Attributes:
-        bucket: The S3 bucket name.
-        remote_prefix: Prefix for S3 keys.
-        local_prefix: Prefix for local paths.
-        max_concurrent: Maximum concurrent operations (currently unused).
-
-    """
+    """Configuration for manifest operations."""
 
     bucket: Annotated[str, Field(min_length=1, strict=True)]
+    """The S3 bucket name."""
+
     remote_prefix: Annotated[str, Field(strict=True)] = ""
+    """Prefix for S3 keys."""
+
     local_prefix: Annotated[str, Field(strict=True)] = ""
-    max_concurrent: Annotated[int, Field(strict=True)] = 50
+    """Prefix for local paths."""
 
 
 class GetManifestResult(BaseModel):
@@ -49,16 +42,13 @@ class StoreManifestResult(BaseModel):
 
 
 class Manifest(BaseModel):
-    """Manages a collection of artifacts for S3 operations.
-
-    Attributes:
-        config: Configuration for the manifest.
-        artifacts: List of artifacts to manage.
-
-    """
+    """Manages a collection of artifacts for S3 operations."""
 
     config: Annotated[ManifestConfiguration, Field()]
+    """Configuration for the manifest."""
+
     artifacts: Annotated[list[Artifact], Field(strict=True)]
+    """List of artifacts to manage."""
 
     @classmethod
     def from_env(cls, artifacts: list[Artifact]) -> Self:
