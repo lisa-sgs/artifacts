@@ -25,4 +25,4 @@ uv run pytest
 
 ## Issues
 
-Report bugs or request features at [GitHub Issues](https://github.com/lisa-sgs/artifacts/issues).
+Report bugs or request features using [GitHub Issues](https://github.com/lisa-sgs/artifacts/issues).
