@@ -6,6 +6,8 @@ jobs:
   build:
     name: Run tests, lint and build documentation.
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         python-version:
@@ -27,6 +29,12 @@ jobs:
 
       - name: Run tests
         run: uv run pytest --cov --cov-report=xml
+
+      - name: Publish coverage
+        uses: orgoro/coverage@v3.2
+        with:
+            coverageFile: coverage.xml
+            token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build documentation
         run: uv run sphinx-multiversion docs _build/html
