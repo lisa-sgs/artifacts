@@ -6,6 +6,8 @@ jobs:
   build:
     name: Run tests, lint and build documentation.
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         python-version:
