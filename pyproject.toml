@@ -22,9 +22,11 @@ Changelog = "https://github.com/lisa-sgs/artifacts/blob/main/CHANGELOG.md"
 dev = [
     "myst-parser",
     "pre-commit",
+    "pytest",
+    "pytest-cov",
     "sphinx",
     "sphinx-multiversion",
-    "sphinx-pydantic",
+    "autodoc_pydantic",
     "sphinx-rtd-theme",
 ]
 

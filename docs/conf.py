@@ -24,6 +24,7 @@ release = "latest"  # Will be overridden by multiversion
 extensions = [
     "myst_parser",
     "sphinx_multiversion",
+    "sphinxcontrib.autodoc_pydantic",
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
 ]
