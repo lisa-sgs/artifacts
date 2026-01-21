@@ -45,7 +45,10 @@ class ManifestConfiguration(BaseModel):
 
 
 class GetManifestResult(BaseModel):
-    """Result of a get operation. Currently empty."""
+    """Result of a get operation."""
+
+    file_locations: Annotated[dict[str, Path], Field(strict=True)]
+    """Mapping of object keys to filesystem paths."""
 
 
 class StoreManifestResult(BaseModel):
@@ -94,13 +97,15 @@ class Manifest(BaseModel):
             Result of the operation.
 
         """
+        file_locations = {}
         client = boto3.client("s3")
         for i, a in enumerate(self.artifacts, start=1):
             logger.info(
                 "Downloading artifact %d/%d: %s", i, len(self.artifacts), a.name
             )
-            self.get_artifact(client, a)
-        return GetManifestResult()
+            path = self.get_artifact(client, a)
+            file_locations[a.name] = path
+        return GetManifestResult(file_locations=file_locations)
 
     def store(self) -> StoreManifestResult:
         """Upload all artifacts to S3.
@@ -116,7 +121,7 @@ class Manifest(BaseModel):
 
         return StoreManifestResult()
 
-    def get_artifact(self, client: S3Client, artifact: Artifact):
+    def get_artifact(self, client: S3Client, artifact: Artifact) -> Path:
         """Download a single artifact from S3.
 
         Args:
@@ -131,7 +136,7 @@ class Manifest(BaseModel):
                 logger.info(
                     "Skipping %s, local file %s exists", artifact_key, local_path
                 )
-                return
+                return local_path
         local_path.parent.mkdir(parents=True, exist_ok=True)
         client.download_file(
             Bucket=self.config.bucket,
@@ -139,6 +144,7 @@ class Manifest(BaseModel):
             Filename=str(local_path),
         )
         logger.debug("Downloaded %s to %s", artifact_key, local_path)
+        return local_path
 
     def store_artifact(self, client: S3Client, artifact: Artifact):
         """Upload a single artifact to S3.
